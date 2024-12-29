@@ -8,8 +8,8 @@ public class PlayerController1 : MonoBehaviour
     public float jumpForce = 15f;
 
     private Animator animator;
-
     private Rigidbody2D rb;
+
 
     private int jumpCount;
     private const int MAX_JUMPS = 2;
@@ -17,10 +17,11 @@ public class PlayerController1 : MonoBehaviour
 
     private bool isGrounded;
     private float groundCheckRadius = 0.8f;
+
     public LayerMask Ground; 
     public Transform groundCheck;
 
-    void Awake()
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -69,10 +70,19 @@ public class PlayerController1 : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Allow jumping state to reset when falling
+        // Allow jumping state to reset when falling, without this the player could sometimes triple jump. 
         if (isGrounded)
         {
             isJumping = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // If the player collides with an object with the tag "enemy", this will be executed.
+        if (other.gameObject.tag == "Enemy") 
+        {
+            GameManager1.Instance.SetPlayerDead();
         }
     }
 
@@ -83,5 +93,5 @@ public class PlayerController1 : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
 
     }
-
+    
 }
