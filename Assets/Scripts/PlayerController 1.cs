@@ -84,7 +84,15 @@ public class PlayerController1 : MonoBehaviour
         {
             GameManager1.Instance.SetPlayerDead();
         }
+
+        if (other.gameObject.tag == "Coin")
+        {
+            GameManager1.Instance.AddCoin();
+            other.gameObject.SetActive(false);
+        }
+
     }
+
 
     void OnDrawGizmosSelected()
     {

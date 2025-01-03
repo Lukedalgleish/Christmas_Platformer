@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GameManager1 : MonoBehaviour
@@ -8,6 +9,15 @@ public class GameManager1 : MonoBehaviour
     public static GameManager1 Instance;
 
     public static bool playerDead { get; private set; }
+    public static int coinCounter { get; private set; }
+    public static int lifeCounter { get; private set; }
+    public static int highscoreCounter { get; private set; }
+
+    private const int RESET_LIFE_COUNTER = 3;
+    private const int RESET_HIGHSCORE_COUNTER = 0;
+    private const int RESET_COIN_COUNTER = 0;
+
+
 
     public GameObject PlayerObject;
     public GameObject playerDeathObject;
@@ -49,8 +59,6 @@ public class GameManager1 : MonoBehaviour
     public void SetPlayerDead()
     {
         playerDead = true;
-
-        Debug.Log("Player is now dead!");
     }
 
     private void PlayerDeathState()
@@ -65,17 +73,63 @@ public class GameManager1 : MonoBehaviour
     {
         playerDead = false;
 
-        Debug.Log("Timer started!");
-        
         // Wait for 3 seconds
         yield return new WaitForSeconds(3f);
 
         playerDeathObject.SetActive(false);
         PlayerObject.transform.position = respawnPos;
         PlayerObject.SetActive(true);
-
-        Debug.Log("Timer ended after 3 seconds!");
     }
+    public void AddCoin()
+    {
+        coinCounter += 1;
+        Debug.Log("Coin counter: " + coinCounter);
+        if (coinCounter >= 100)
+        {
+            // Add a live
+            AddLife();
+
+            //Reset coin amount back to 0
+            coinCounter = RESET_COIN_COUNTER;
+        }
+    }
+
+    public void AddLife()
+    {
+        lifeCounter += 1;
+        Debug.Log("Life counter: " + lifeCounter);
+        
+    }
+
+    public void RemoveLife()
+    {
+        lifeCounter -= 1;
+        Debug.Log("Life counter: " + lifeCounter);
+
+        if (lifeCounter <= 0)
+        {
+            /* 
+             * When the lifeCounter goes below 0 we want to:
+             * Lifecounter re-verts back to 3 (Use "DEFAULT_LIFE_COUNTER").
+             * The highscore needs to be decreased to 0
+             */
+            lifeCounter = RESET_LIFE_COUNTER;
+            highscoreCounter = RESET_HIGHSCORE_COUNTER;
+        }
+    }
+
+    public void AddScore()
+    {
+        /* 
+         * Here we need to add score based on player action e.g. (Collecting coins, killing enemies etc...)
+         * Not sure how we're setting this up yet but thats the idea!
+         */
+
+        highscoreCounter += 1;
+        Debug.Log("Highscore counter: " + highscoreCounter);
+    }
+
+
 }
 
 
