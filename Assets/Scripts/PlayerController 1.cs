@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerController1 : MonoBehaviour
 {
+    [SerializeField] GameObject Fireball;
+
     public float moveSpeed = 5f;
     public float jumpForce = 15f;
+    public static bool playerSpriteForward { get; private set; }
 
     private Animator animator;
     private Rigidbody2D rb;
@@ -45,9 +48,16 @@ public class PlayerController1 : MonoBehaviour
 
         // Flip Sprite Based on Direction
         if (moveInput > 0)
+        {
             transform.localScale = new Vector3(1, 1, 1);
-        else if (moveInput < 0)
+            playerSpriteForward = true;
+        }
+        else if(moveInput < 0)
+        {
             transform.localScale = new Vector3(-1, 1, 1);
+            playerSpriteForward = false;
+        }
+            
 
         // Checks if grounded
         isGrounded = Physics2D.OverlapCircle( groundCheck.position, groundCheckRadius, Ground);
@@ -65,6 +75,12 @@ public class PlayerController1 : MonoBehaviour
             animator.SetInteger("playerState", 2);
             jumpCount++;
             isJumping = true; // Player is in a jumping state
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("spawn fireball");
+            Instantiate(Fireball, gameObject.transform.position, gameObject.transform.rotation);
         }
     }
 

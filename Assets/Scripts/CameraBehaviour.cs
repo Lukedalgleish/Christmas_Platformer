@@ -8,7 +8,9 @@ public class CameraBehaviour : MonoBehaviour
     private Vector3 offset = new Vector3(0, 0, -1);      // Offset from the player
     private float smoothSpeed = 0.125f;  // How smooth the camera moves
 
-    void LateUpdate()
+
+    // better for the camera to be in FixedUpdate instead of LateUpdate, the camera doesnt gitter. 
+    void FixedUpdate()
     {
         if (player != null)
         {

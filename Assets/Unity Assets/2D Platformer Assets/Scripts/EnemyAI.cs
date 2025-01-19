@@ -36,5 +36,14 @@ namespace Platformer
             transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
             moveSpeed *= -1;
         }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.tag == "Fireball")
+            {
+                Destroy(other.gameObject);
+                Destroy(gameObject);
+            }
+        }
     }
 }

@@ -83,7 +83,7 @@ public class GameManager1 : MonoBehaviour
     public void AddCoin()
     {
         coinCounter += 1;
-        Debug.Log("Coin counter: " + coinCounter);
+        //Debug.Log("Coin counter: " + coinCounter);
         if (coinCounter >= 100)
         {
             // Add a live
