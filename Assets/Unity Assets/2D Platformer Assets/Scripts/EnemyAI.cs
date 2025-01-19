@@ -9,10 +9,9 @@ namespace Platformer
         public float moveSpeed = 1f; 
         public LayerMask ground;
         public LayerMask wall;
-
         private Rigidbody2D rigidbody; 
         public Collider2D triggerCollider;
-        
+
         void Start()
         {
             rigidbody = GetComponent<Rigidbody2D>();

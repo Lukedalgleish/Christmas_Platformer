@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController1 : MonoBehaviour
 {
-    [SerializeField] GameObject Fireball;
+    [SerializeField] GameObject RangedAttack;
 
     public float moveSpeed = 5f;
     public float jumpForce = 15f;
@@ -12,7 +12,6 @@ public class PlayerController1 : MonoBehaviour
 
     private Animator animator;
     private Rigidbody2D rb;
-
 
     private int jumpCount;
     private const int MAX_JUMPS = 2;
@@ -58,7 +57,6 @@ public class PlayerController1 : MonoBehaviour
             playerSpriteForward = false;
         }
             
-
         // Checks if grounded
         isGrounded = Physics2D.OverlapCircle( groundCheck.position, groundCheckRadius, Ground);
 
@@ -79,8 +77,15 @@ public class PlayerController1 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("spawn fireball");
-            Instantiate(Fireball, gameObject.transform.position, gameObject.transform.rotation);
+            // Spawn the ranged attack depending on the direction the player is facing
+            if (playerSpriteForward)
+            {
+                Instantiate(RangedAttack, new Vector3(transform.position.x + 0.75f, transform.position.y, transform.position.z), gameObject.transform.rotation);
+            }
+            else if (playerSpriteForward == false) 
+            {
+                Instantiate(RangedAttack, new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z), gameObject.transform.rotation);
+            }
         }
     }
 
@@ -98,7 +103,7 @@ public class PlayerController1 : MonoBehaviour
         // If the player collides with an object with the tag "enemy", this will be executed.
         if (other.gameObject.tag == "Enemy") 
         {
-            GameManager1.Instance.SetPlayerDead();
+            GameManager1.Instance.PlayerTakesDamage();
         }
 
         if (other.gameObject.tag == "Coin")
@@ -106,16 +111,13 @@ public class PlayerController1 : MonoBehaviour
             GameManager1.Instance.AddCoin();
             other.gameObject.SetActive(false);
         }
-
     }
-
 
     void OnDrawGizmosSelected()
     {
         // Visual aid to check the ground collision.
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-
     }
     
 }

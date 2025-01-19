@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GameManager1 : MonoBehaviour
@@ -12,11 +9,12 @@ public class GameManager1 : MonoBehaviour
     public static int coinCounter { get; private set; }
     public static int lifeCounter { get; private set; }
     public static int highscoreCounter { get; private set; }
+    public static int currentPlayerHealth { get; private set; }
 
+    private const int MAX_PLAYER_HEALTH = 100;
     private const int RESET_LIFE_COUNTER = 3;
     private const int RESET_HIGHSCORE_COUNTER = 0;
     private const int RESET_COIN_COUNTER = 0;
-
 
 
     public GameObject PlayerObject;
@@ -44,6 +42,9 @@ public class GameManager1 : MonoBehaviour
         }
 
         deathRB = playerDeathObject.GetComponent<Rigidbody2D>();
+
+        // Temp until I create a save/load system
+        currentPlayerHealth = 100;
     }
 
     void Update()
@@ -59,6 +60,15 @@ public class GameManager1 : MonoBehaviour
     public void SetPlayerDead()
     {
         playerDead = true;
+    }
+
+    public void PlayerTakesDamage()
+    {
+        currentPlayerHealth -= 50;
+        if (currentPlayerHealth <= 0)
+        {
+            PlayerDeathState();
+        }
     }
 
     private void PlayerDeathState()

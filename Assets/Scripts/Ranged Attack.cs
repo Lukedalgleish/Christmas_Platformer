@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class RangedAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private float moveSpeed;
+    private float moveSpeed = 10;
     private float timeBeforeDestroyed = 5;
 
     private Rigidbody2D rb;
@@ -14,14 +13,11 @@ public class Fireball : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         // We check which direction the player is facing and shoot the fireball depending on that 
-        if(PlayerController1.playerSpriteForward == true)
+        if (PlayerController1.playerSpriteForward == false)
         {
-            moveSpeed = 5f;
+            moveSpeed = -10f;
         }
-        else
-        {
-            moveSpeed = -5f;
-        }
+        
     }
 
     // Update is called once per frame
@@ -29,7 +25,6 @@ public class Fireball : MonoBehaviour
     {
         // Moves the fireball
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-
         // This is a timer that destroys the fireball after 5 seconds
         timeBeforeDestroyed -= Time.deltaTime;
         if(timeBeforeDestroyed <= 0)
