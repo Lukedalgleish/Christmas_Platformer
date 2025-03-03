@@ -7,6 +7,8 @@ TagManager:
   - Coin
   - Enemy
   - Fireball
+  - Sword
+  - Enemy Head
   layers:
   - Default
   - TransparentFX
@@ -14,9 +16,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - PlayerWeapon
+  - Enemy
   - 
   - 
   - 
@@ -43,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Sword
+    uniqueID: 4167343443
     locked: 0

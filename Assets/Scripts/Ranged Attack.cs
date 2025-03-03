@@ -11,7 +11,6 @@ public class RangedAttack : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         // We check which direction the player is facing and shoot the fireball depending on that 
         if (PlayerController1.playerSpriteForward == false)
         {
@@ -24,7 +23,9 @@ public class RangedAttack : MonoBehaviour
     void Update()
     {
         // Moves the fireball
+
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+
         // This is a timer that destroys the fireball after 5 seconds
         timeBeforeDestroyed -= Time.deltaTime;
         if(timeBeforeDestroyed <= 0)

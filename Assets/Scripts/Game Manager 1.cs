@@ -9,7 +9,6 @@ public class GameManager1 : MonoBehaviour
     public static int coinCounter { get; private set; }
     public static int lifeCounter { get; private set; }
     public static int highscoreCounter { get; private set; }
-    public static int currentPlayerHealth { get; private set; }
 
     private const int MAX_PLAYER_HEALTH = 100;
     private const int RESET_LIFE_COUNTER = 3;
@@ -43,8 +42,6 @@ public class GameManager1 : MonoBehaviour
 
         deathRB = playerDeathObject.GetComponent<Rigidbody2D>();
 
-        // Temp until I create a save/load system
-        currentPlayerHealth = 100;
     }
 
     void Update()
@@ -52,9 +49,7 @@ public class GameManager1 : MonoBehaviour
         if(playerDead == true)
         {
             PlayerDeathState();
-            StartCoroutine(RespawnPlayerCoroutine());
-        }
-        else { return; }
+        }else { return; }
     }
 
     public void SetPlayerDead()
@@ -62,21 +57,19 @@ public class GameManager1 : MonoBehaviour
         playerDead = true;
     }
 
-    public void PlayerTakesDamage()
-    {
-        currentPlayerHealth -= 50;
-        if (currentPlayerHealth <= 0)
-        {
-            PlayerDeathState();
-        }
-    }
-
     private void PlayerDeathState()
     {
+        lifeCounter--;
         PlayerObject.SetActive(false);
         playerDeathObject.transform.position = PlayerObject.transform.position;
         playerDeathObject.SetActive(true);
         deathRB.AddForce(transform.up * 5, ForceMode2D.Impulse);
+
+        StartCoroutine(RespawnPlayerCoroutine());
+        if (lifeCounter <= 0)
+        {
+            Debug.Log("You've lost, going back to main menu");
+        }
     }
 
     IEnumerator RespawnPlayerCoroutine()

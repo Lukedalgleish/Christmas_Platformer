@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController1 : MonoBehaviour
 {
-    [SerializeField] GameObject RangedAttack;
+    [SerializeField] GameObject rangedAttack;
+    [SerializeField] GameObject swordAttack;
 
     public float moveSpeed = 5f;
     public float jumpForce = 15f;
@@ -69,24 +70,36 @@ public class PlayerController1 : MonoBehaviour
         // Jump Logic and Animation
         if (Input.GetButtonDown("Jump") && jumpCount < MAX_JUMPS)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            animator.SetInteger("playerState", 2);
-            jumpCount++;
-            isJumping = true; // Player is in a jumping state
+            Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             // Spawn the ranged attack depending on the direction the player is facing
             if (playerSpriteForward)
             {
-                Instantiate(RangedAttack, new Vector3(transform.position.x + 0.75f, transform.position.y, transform.position.z), gameObject.transform.rotation);
+                Instantiate(rangedAttack, new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z), gameObject.transform.rotation);
             }
             else if (playerSpriteForward == false) 
             {
-                Instantiate(RangedAttack, new Vector3(transform.position.x - 0.75f, transform.position.y, transform.position.z), gameObject.transform.rotation);
+                Instantiate(rangedAttack, new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z), gameObject.transform.rotation);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            // I need to add a cooldown so player cannot spam it. 
+            swordAttack.SetActive(true);
+
+        }
+    }
+
+    public void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        animator.SetInteger("playerState", 2);
+        jumpCount++;
+        isJumping = true; // Player is in a jumping state
     }
 
     void FixedUpdate()
@@ -101,15 +114,15 @@ public class PlayerController1 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // If the player collides with an object with the tag "enemy", this will be executed.
-        if (other.gameObject.tag == "Enemy") 
-        {
-            GameManager1.Instance.PlayerTakesDamage();
-        }
 
         if (other.gameObject.tag == "Coin")
         {
             GameManager1.Instance.AddCoin();
             other.gameObject.SetActive(false);
+        }
+        if (other.gameObject.tag == "Enemy")
+        {
+            GameManager1.Instance.SetPlayerDead();
         }
     }
 
@@ -119,5 +132,4 @@ public class PlayerController1 : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
-    
 }
