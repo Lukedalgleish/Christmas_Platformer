@@ -9,6 +9,7 @@ TagManager:
   - Fireball
   - Sword
   - Enemy Head
+  - World
   layers:
   - Default
   - TransparentFX

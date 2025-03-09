@@ -9,6 +9,7 @@ namespace Platformer
         public float moveSpeed = 1f; 
         public LayerMask ground;
         public LayerMask wall;
+        public LayerMask player;
         private Rigidbody2D rb; 
         public Collider2D triggerCollider;
 
@@ -24,7 +25,7 @@ namespace Platformer
 
         void FixedUpdate()
         {
-            if(!triggerCollider.IsTouchingLayers(ground) || triggerCollider.IsTouchingLayers(wall))
+            if(!triggerCollider.IsTouchingLayers(ground) || triggerCollider.IsTouchingLayers(wall) || triggerCollider.IsTouchingLayers(player))
             {
                 Flip();
             }
