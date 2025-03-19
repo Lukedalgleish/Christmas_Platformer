@@ -126,6 +126,15 @@ public class PlayerController1 : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Hit player");
+            GameManager1.Instance.SetPlayerDead();
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         // Visual aid to check the ground collision.

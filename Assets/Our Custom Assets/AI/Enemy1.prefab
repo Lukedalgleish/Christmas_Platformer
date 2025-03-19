@@ -330,4 +330,7 @@ MonoBehaviour:
   wall:
     serializedVersion: 2
     m_Bits: 0
+  player:
+    serializedVersion: 2
+    m_Bits: 64
   triggerCollider: {fileID: 7873588928898685948}
