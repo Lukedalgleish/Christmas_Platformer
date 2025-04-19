@@ -133,6 +133,12 @@ public class PlayerController1 : MonoBehaviour
             Debug.Log("Hit player");
             GameManager1.Instance.SetPlayerDead();
         }
+
+        if (collision.gameObject.tag == "Shell")
+        {
+            Debug.Log("Hit player");
+            GameManager1.Instance.SetPlayerDead();
+        }
     }
 
     void OnDrawGizmosSelected()

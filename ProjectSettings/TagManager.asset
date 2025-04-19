@@ -10,6 +10,8 @@ TagManager:
   - Sword
   - Enemy Head
   - World
+  - Wall
+  - Shell
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Player
   - PlayerWeapon
   - Enemy
-  - 
+  - Wall
   - 
   - 
   - 

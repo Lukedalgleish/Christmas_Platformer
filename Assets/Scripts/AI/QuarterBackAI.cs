@@ -36,11 +36,9 @@ public class QuarterBackAI : MonoBehaviour
             if (distance <= chaseDistance && !hasTarget)
             {
                 playersLastPosition = player.position;
-                Debug.Log("Players last position: " + playersLastPosition);
                 hasTarget = true;
                 return;
             }
-            Debug.Log("Searching for player");
             Debug.Log(hasTarget);
         }
         Debug.Log(transform.position);
@@ -56,15 +54,12 @@ public class QuarterBackAI : MonoBehaviour
 
             if (Vector2.Distance(rb.position, new Vector2(playersLastPosition.x, rb.position.y)) < 0.1f)
             {
-                Debug.Log("Object has reached the target position! Start timer...");
                 // Add a timer for 3 seconds then turn hastarget to false. 
                 breakDurationRemaining -= Time.deltaTime;
-                Debug.Log("Time remainging before the AI can find a new target: " + breakDurationRemaining);
                 if (breakDurationRemaining <= 0)
                 {
                     hasTarget = false;
                     breakDurationRemaining = breakDurationTime;
-                    Debug.Log("AI can find a new target");
                 }
 
             }
